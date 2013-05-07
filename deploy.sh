@@ -14,7 +14,7 @@ fi
 
 
 OLDDIR=~/dotfiles_old
-DOTFILES="bashrc vimrc gvimrc vim svn.bashrc gitconfig"
+DOTFILES="bashrc vimrc gvimrc vim svn.bashrc gitconfig screenrc"
 
 echo "Creating $OLDDIR for backup of any existing dotfiles in ~"
 mkdir -p $OLDDIR

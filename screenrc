@@ -16,9 +16,3 @@ defbce "on"
 vbell_msg "bell: window ~%" # Message for visual bell
 vbellwait 2 # Seconds to pause the screen for visual bell
 vbell off # Turns visual bell off
-
-# Preparing for the programming.
-#screen -t bash
-#screen -t editor
-#screen -t compiler
-#screen -t bash
