@@ -19,6 +19,10 @@ PLUGINS=("vim-scripts/bufexplorer.zip"
 SUFFIX=".git"
 
 echo "Start to install plugins..."
+if [ ! -d bundle ]; then
+    mkdir -p bundle
+fi
+
 cd bundle/
 for plugin in ${PLUGINS[@]}; do
     git clone $PREFIX://$GITHUB/$plugin$SUFFIX

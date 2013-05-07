@@ -19,9 +19,12 @@ PLUGINS=("vim-scripts/bufexplorer.zip"
 SUFFIX=".git"
 
 echo "Start to update plugins..."
+CWD=`pwd`
 for plugin in ${PLUGINS[@]}; do
     cd bundle/`basename $plugin`
+    echo "Updating $plugin"
     git pull
+    cd $CWD
 done
 
 echo "Done."
