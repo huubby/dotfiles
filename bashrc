@@ -8,10 +8,9 @@ fi
 # Other user specifications
 # .bash_profile
 
-# Get aliases and functions
-if [ -f ~/.bashrc ]; then
-    . ~/.bashrc
-fi
+# Fix putty ctrl-s
+stty ixany
+stty ixoff -ixon
 
 export PATH=~/bin:~/Tools:/usr/local/bin:$PATH
 
@@ -28,3 +27,6 @@ source ~/.svn.bashrc
 
 # Aliases
 alias ll='ls -l'
+
+# Fix "Gtk-WARNING **: cannot open display"
+alias git="SSH_ASKPASS='' git"
