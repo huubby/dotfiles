@@ -28,7 +28,7 @@ map <silent> <leader>q :mksession cursession<cr>:q<cr>
 
 "when vimrc is writed, reload it
 if has('autocmd')
-    autocmd! bufwritepost .vimrc source $MYVIMRC
+    autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 endif
 
 " fold settings, fold the same indent line
@@ -80,14 +80,17 @@ set tm=500
 set encoding=utf8
 
 " Syntax highlighting by default.
+"syntax on
 syntax enable
 
 set t_Co=256
 
+" The following 2 settings' order will effect the color scheme
 "colorscheme Tomorrow-Night-Eighties
 "set background=dark
-set background=dark 
+set background=dark
 colorscheme solarized
+
 
 if has("gui_running")
     set guioptions-=T
@@ -96,7 +99,6 @@ if has("gui_running")
     "set lines=45 columns=120
     set gfn=Monaco:h12
 endif
-
 
 try
     lang en_US
@@ -139,7 +141,7 @@ set ai si wrap
 
 set textwidth=80
 set formatoptions=qrn1  " Actually, I don't know the exactly meaning of this
-set colorcolumn=90      " Show a colored column at 90 characters 
+set colorcolumn=80      " Show a colored column at 90 characters 
 
 
 """"""""""""""""""""""""""""""
@@ -184,12 +186,38 @@ endfunction
 " => Moving around, tabs and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Treat long lines as break lines
+" Problem with the relative number
 "map j gj
 "map k gk
+
 " Map space to / (search) and c-space to ? (backgwards search)
 map <space> /
 map <c-space> ?
 map <silent> <leader><cr> :noh<cr>
+
+"" Move line vertically, need the work around to work properly
+"noremap <A-j> :m+<CR>
+"noremap <A-k> :m-2<CR>
+"inoremap <A-j> <Esc>:m+<CR>
+"inoremap <A-k> <Esc>:m-2<CR>
+"vnoremap <A-j> :m'>+<CR>gv
+"vnoremap <A-k> :m-2<CR>gv
+"
+"" Work around 'no-meta-key-terminal' problem
+"" see http://goo.gl/vbvDn for more details 
+"let c='a'
+"while c <= 'z'
+"    exec "set <A-".c.">=\e".c
+"    exec "imap \e".c." <A-".c.">"
+"    let c = nr2char(1+char2nr(c))
+"endw
+"
+"set timeout ttimeoutlen=50
+"" END of workaround
+
+" Resize splits when window resized
+au VimResized * exe "normal! \<c-w>="
+
 
 " Smart way to move between windows
 map <C-j> <C-W>j
@@ -197,14 +225,44 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" Swap split window
+function! MarkWindowSwap()
+    let g:markedWinNum = winnr()
+endfunction
+
+function! DoWindowSwap()
+    "Mark destination
+    let curNum = winnr()
+    let curBuf = bufnr( "%" )
+    exe g:markedWinNum . "wincmd w"
+    "Switch to source and shuffle dest->source
+    let markedBuf = bufnr( "%" )
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' curBuf
+    "Switch to dest and shuffle source->dest
+    exe curNum . "wincmd w"
+    "Hide and open so that we aren't prompted and keep history
+    exe 'hide buf' markedBuf 
+endfunction
+
+nmap <silent> <leader>mw :call MarkWindowSwap()<CR>
+nmap <silent> <leader>pw :call DoWindowSwap()<CR>
+
 " Fix the horribly default regex handling
 nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
 
+" Make Y behave likt other capitals
+map Y y$
+
 " Close the current buffer without saving
 map <leader>bd :Bclose<cr>
+
+" Avoid the bloody far <Esc>
+inoremap jk <Esc>
+inoremap kj <Esc>
 
 " Map the <Esc> to a nearer key under insert mode
 inoremap <c-[> <Esc>
@@ -244,7 +302,6 @@ endfunction
 set laststatus=2
 
 " Format the statusline, this is fantastic!
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{CurDir()}%h\ \ \ Line:\ %l/%L:%c
 set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y
 set statusline+=%=%c,%l/%L\ %P
 
@@ -302,7 +359,7 @@ autocmd BufWrite *.hpp :call DeleteTrailingWS()
 """""""""""""""""""""""""""""""""""""""""
 " Quickfix
 """""""""""""""""""""""""""""""""""""""""
-autocmd FileType c,cpp map<buffer> <leader><space> :w<cr>:make<cr>
+"autocmd FileType c,cpp map<buffer> <leader><space> :w<cr>:make<cr>
 nmap <leader>cc :botright cope<cr>
 nmap <leader>cn :cn<cr>
 nmap <leader>cp :cp<cr>
@@ -312,9 +369,9 @@ nmap <leader>ccl :ccl<cr>
 """""""""""""""""""""""""""""""""""""""""
 " BufExplorer
 """""""""""""""""""""""""""""""""""""""""
-let g:bufExplorerDefaultHelp=0 " Do not show default help
+let g:bufExplorerDefaultHelp=0      " Do not show default help
 let g:bufExplorerShowRelativePath=1 " Show relative paths
-let g:bufExplorerSortBy='name'       " Sort by the buffer's name.
+let g:bufExplorerSortBy='name'      " Sort by the buffer's name.
 map <leader>o :BufExplorer<cr>
 
 
@@ -326,25 +383,6 @@ inoremap <C-F>   <C-X><C-F>
 inoremap <C-D>   <C-X><C-D>
 inoremap <C-L>   <C-X><C-L>
 inoremap <C-P>   <C-X><C-P>
-
-
-"""""""""""""""""""""""""""""""""""""""""
-" a.vim
-"""""""""""""""""""""""""""""""""""""""""
-"switches to the header file corresponding to the current file being edited
-map <leader>a :A<cr>
-"splits and switches
-map <leader>a :AS<cr>
-"vertical splits and switches
-map <leader>a :AV<cr>
-"cycles through matches
-map <leader>a :AN<cr>
-"switches to file under cursor
-map <leader>a :IH<cr>
-"splits and switches
-map <leader>a :IHS<cr>
-"vertical splits and switches
-map <leader>a :IHV<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""
@@ -364,12 +402,19 @@ set completeopt=longest,menu
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
+
 """"""""""""""""""""""""""""""
 " => Python section
 " """"""""""""""""""""""""""""""
 let python_highlight_all=1
 au FileType python syn keyword pythonDecorator True None False self
-au FileType python set tags+=/usr/lib/python2.7/python27tags
+
+if has("win32") || has("win64")
+    au FileType python set tags+="C:\Python27\Lib\python_tags"
+else
+    au FileType python set tags+=/usr/lib/python2.7/python27tags
+endif
+
 au BufNewFile,BufRead *.jinja set syntax=htmljinja
 au BufNewFile,BufRead *.mako set ft=mako
 
@@ -391,7 +436,10 @@ let g:pyflakes_use_quickfix = 0
 """""""""""""""""""""""""""""""""""""""""
 " Google appengine
 """""""""""""""""""""""""""""""""""""""""
-au FileType python set tags+=/usr/lib/python2.7/gapptags
+if has("win32") || has("win64")
+else
+    au FileType python set tags+=/usr/lib/python2.7/gapptags
+endif
 
 """""""""""""""""""""""""""""""""""""""""
 " HTML section
@@ -399,53 +447,12 @@ au FileType python set tags+=/usr/lib/python2.7/gapptags
 au BufNewFile,BufRead *.html set filetype=htmldjango
 
 """""""""""""""""""""""""""""""""""""""""
-" Taglist
+" Tagbar
 """""""""""""""""""""""""""""""""""""""""
-" Indicate ctags path
-let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
-" Only show tags in current file
-let Tlist_Show_One_File=1
-" Exit vim if tags window is only windows
-let Tlist_Exit_OnlyWindow=1
+let g:tagbar_autoclose=1
+let g:tagbar_autofocus=1
 " Short-key for flip tags list open/close, not useful when using winmanager
-map <silent> <F9> :TlistToggle<cr>
-
-
-""""""""""""""""""""""""""""""
-" lookupfile setting
-" """"""""""""""""""""""""""""""
-let g:LookupFile_MinPatLength = 3               " two characters need to start searching
-let g:LookupFile_PreserveLastPattern = 0        " do not saving the last search string
-let g:LookupFile_PreservePatternHistory = 1     " saving history
-let g:LookupFile_AlwaysAcceptFirst = 1
-let g:LookupFile_AllowNewFiles = 0
-let g:LookupFile_FileFilter = '\.class$\|\.o$\|\.obj$\|\.exe$\|\.jar$\|\.zip$\|\.war$\|\.ear$' "Don't display binary files
-if filereadable("./filenametags")
-    let g:LookupFile_TagExpr = string('./filenametags')
-    let g:LookupFile_LookupFunc = 'LookupFile_IgnoreCaseFunc'
-endif
-
-nmap <silent> <leader>lk :LUTags<cr>
-nmap <silent> <leader>ll :LUBufs<cr>
-nmap <silent> <leader>lw :LUWalk<cr>
-" lookup file with ignore case
-function! LookupFile_IgnoreCaseFunc(pattern)
-    let _tags = &tags
-    try
-        let &tags = eval(g:LookupFile_TagExpr)
-        let newpattern = '\c' . a:pattern
-        let tags = taglist(newpattern)
-    catch
-        echohl ErrorMsg | echo "Exception: " . v:exception | echohl NONE
-        return ""
-    finally
-        let &tags = _tags
-    endtry
-
-    " Show the matches for what is typed so far.
-    let files = map(tags, 'v:val["filename"]')
-    return files
-endfunction
+map <silent> <F9> :TagbarToggle<cr>
 
 
 """"""""""""""""""""""""""""""""""""""
@@ -453,18 +460,21 @@ endfunction
 """"""""""""""""""""""""""""""""""""""
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_working_path_mode=0 " don't change the working directory
-let g:ctrlp_user_command='find %s -type f | grep -v -P "\.git|\.bak"' " custom file listing command
-"let g:ctrlp_custom_ignore = {
-"    \ 'dir':  '\v[\/]\.(git|hg|svn)',
-"    \ 'file': '\v\.(exe|so|dll)$',
-"    \ }
-
+let g:ctrlp_by_filename = 1     " Search by file name, instead of full path
+let g:ctrlp_regexp = 1          " Use regexp search
+set wildignore+='*/.git/*,*/.hg/*,*/.svn/*'
+let g:ctrlp_custom_ignore='\.git$\|\.hg$\|\.svn$'
+let g:ctrlp_user_command='find %s -type f | grep -v -P "\.o$|/tmp/"'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope setting
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("cscope")
-    set csprg=/usr/local/bin/cscope
+    if has("win32") || has("win64")
+        set csprg=C:\Tools\cscope\cscope.exe
+    else
+        set csprg=/usr/bin/cscope
+    endif
     set csto=1
     set cst
     set nocsverb
@@ -487,15 +497,6 @@ nmap <leader>cfd :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 
 """"""""""""""""""""""""""""""""
-" Tags file setting
-""""""""""""""""""""""""""""""""
-au FileType c,cpp set tags+=/usr/include/usr_include_tags
-au FileType c,cpp set tags+=/usr/local/include/localtags
-if filereadable("local.vim")
-    source local.vim
-endif
-
-""""""""""""""""""""""""""""""""
 " Arrow fixing
 """"""""""""""""""""""""""""""""
 nnoremap <Esc>A <up>
@@ -507,6 +508,7 @@ inoremap <Esc>B <down>
 inoremap <Esc>C <right>
 inoremap <Esc>D <left>
 
+
 """""""""""""""""""""""""""""""""""""""
 " vimdiff color settings
 """""""""""""""""""""""""""""""""""""""
@@ -515,3 +517,10 @@ highlight DiffChange term=reverse cterm=bold ctermbg=cyan ctermfg=black
 highlight DiffText term=reverse cterm=bold ctermbg=gray ctermfg=black
 highlight DiffDelete term=reverse cterm=bold ctermbg=red ctermfg=black
 
+
+""""""""""""""""""""""""""""""""
+" Local project settings
+""""""""""""""""""""""""""""""""
+if filereadable("local.vim")
+    source local.vim
+endif
