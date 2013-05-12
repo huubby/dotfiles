@@ -464,7 +464,13 @@ let g:ctrlp_by_filename = 1     " Search by file name, instead of full path
 let g:ctrlp_regexp = 1          " Use regexp search
 set wildignore+='*/.git/*,*/.hg/*,*/.svn/*'
 let g:ctrlp_custom_ignore='\.git$\|\.hg$\|\.svn$'
-let g:ctrlp_user_command='find %s -type f | grep -v -P "\.o$|/tmp/"'
+let g:ctrlp_user_command = {
+    \ 'types': {
+      \ 1: ['.git', 'cd %s && git ls-files'],
+      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+      \ },
+    \ 'fallback': 'find %s -type f'
+    \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope setting
