@@ -460,7 +460,6 @@ map <silent> <F9> :TagbarToggle<cr>
 """"""""""""""""""""""""""""""""""""""
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_working_path_mode=0 " don't change the working directory
-let g:ctrlp_by_filename = 1     " Search by file name, instead of full path
 let g:ctrlp_regexp = 1          " Use regexp search
 set wildignore+='*/.git/*,*/.hg/*,*/.svn/*'
 let g:ctrlp_custom_ignore='\.git$\|\.hg$\|\.svn$'
@@ -478,8 +477,6 @@ let g:ctrlp_user_command = {
 if has("cscope")
     if has("win32") || has("win64")
         set csprg=C:\Tools\cscope\cscope.exe
-    else
-        set csprg=/usr/bin/cscope
     endif
     set csto=1
     set cst
