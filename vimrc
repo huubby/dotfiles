@@ -461,14 +461,18 @@ map <silent> <F9> :TagbarToggle<cr>
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_working_path_mode=0 " don't change the working directory
 let g:ctrlp_regexp = 1          " Use regexp search
-set wildignore+='*/.git/*,*/.hg/*,*/.svn/*'
-let g:ctrlp_custom_ignore='\.git$\|\.hg$\|\.svn$'
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" These 2 options are not used when g:ctrlp_user_command defined
+
+"set wildignore+='*/.git/*,*/.hg/*,*/.svn/*'
+"let g:ctrlp_custom_ignore='\.git$\|\.hg$\|\.svn$\|\.o$'
 let g:ctrlp_user_command = {
     \ 'types': {
       \ 1: ['.git', 'cd %s && git ls-files'],
       \ 2: ['.hg', 'hg --cwd %s locate -I .'],
       \ },
-    \ 'fallback': 'find %s -type f'
+    \ 'fallback': 'find %s -type f ! -name "*.o" -a ! -name "*.a"'
     \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
