@@ -1,0 +1,2 @@
+#!/bin/sh
+~/bin/vimdiff "$2" "$5"
