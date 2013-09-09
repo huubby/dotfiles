@@ -97,6 +97,7 @@ colorscheme solarized
 
 if has("gui_running")
     set guioptions-=T
+    set guioptions-=r
     set lines=75 columns=120
     "set lines=75
     if has("win32") || has("win64")
