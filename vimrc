@@ -468,6 +468,7 @@ let g:ctrlp_regexp = 1          " Use regexp search
 
 "set wildignore+='*/.git/*,*/.hg/*,*/.svn/*'
 "let g:ctrlp_custom_ignore='\.git$\|\.hg$\|\.svn$\|\.o$'
+if !has("win32")
 let g:ctrlp_user_command = {
     \ 'types': {
       \ 1: ['.git', 'cd %s && git ls-files'],
@@ -475,6 +476,7 @@ let g:ctrlp_user_command = {
       \ },
     \ 'fallback': 'find %s -type f ! -name "*.o" -a ! -name "*.a"'
     \ }
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OutlookVim setting
