@@ -99,7 +99,11 @@ if has("gui_running")
     set guioptions-=T
     set lines=75 columns=120
     "set lines=75
-    set gfn=Lucida\ Console:h10
+    if has("win32") || has("win64")
+        set gfn=Lucida\ Console:h10
+    else
+        set gfn=Monaco:h12
+    endif
 endif
 
 try
@@ -468,7 +472,7 @@ let g:ctrlp_regexp = 1          " Use regexp search
 
 "set wildignore+='*/.git/*,*/.hg/*,*/.svn/*'
 "let g:ctrlp_custom_ignore='\.git$\|\.hg$\|\.svn$\|\.o$'
-if !has("win32")
+if !has("win32") && !has("win64")
 let g:ctrlp_user_command = {
     \ 'types': {
       \ 1: ['.git', 'cd %s && git ls-files'],
@@ -481,7 +485,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OutlookVim setting
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has('win32')
+if has("win32") || has("win64")
     let g:outlook_textwidth = 72
 endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
