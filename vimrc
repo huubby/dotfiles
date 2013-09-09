@@ -47,7 +47,10 @@ set lazyredraw
 set magic
 set ruler "Always show current position
 
-set cursorline  " Highlight line of the cursor
+" Have cursor line only in current window
+autocmd WinLeave * set nocursorline
+autocmd WinEnter * set cursorline
+
 set ttyfast     " Fast terminal connection
 set showcmd		" Show (partial) command in status line.
 set showmatch		" Show matching brackets.
@@ -94,10 +97,9 @@ colorscheme solarized
 
 if has("gui_running")
     set guioptions-=T
-    set guioptions-=r
-    set guioptions-=L
-    "set lines=45 columns=120
-    set gfn=Monaco:h12
+    set lines=75 columns=120
+    "set lines=75
+    set gfn=Lucida\ Console:h10
 endif
 
 try
@@ -105,7 +107,6 @@ try
 catch
 endtry
 
-set ffs=unix,dos,mac " Default file types
 
 
 """""""""""""""""""""""""""""""""""""""""
@@ -141,7 +142,7 @@ set ai si wrap
 
 set textwidth=80
 set formatoptions=qrn1  " Actually, I don't know the exactly meaning of this
-set colorcolumn=80      " Show a colored column at 90 characters 
+set colorcolumn=80      " Show a colored column at 80 characters 
 
 
 """"""""""""""""""""""""""""""
@@ -475,6 +476,12 @@ let g:ctrlp_user_command = {
     \ 'fallback': 'find %s -type f ! -name "*.o" -a ! -name "*.a"'
     \ }
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" OutlookVim setting
+" """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('win32')
+    let g:outlook_textwidth = 72
+endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Cscope setting
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
