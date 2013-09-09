@@ -17,6 +17,7 @@ PLUGINS=("vim-scripts/bufexplorer.zip"
          "chriskempson/vim-tomorrow-theme"
          "Lokaltog/vim-easymotion"
          "sukima/xmledit"
+         "tpope/vim-fugitive"
          "mattn/zencoding-vim")
 SUFFIX=".git"
 
