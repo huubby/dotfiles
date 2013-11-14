@@ -71,6 +71,8 @@ set autowrite		" Automatically save before commands like :next and :make
 set hidden          " Hide buffers when they are abandoned
 set relativenumber  " Show relative line number, convenient for movement
 
+set cinoptions=:s,g0,t0,(0,J1
+
 " No sound on errors
 set noerrorbells
 set novisualbell
