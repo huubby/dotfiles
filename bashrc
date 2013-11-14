@@ -12,7 +12,8 @@ fi
 stty ixany
 stty ixoff -ixon
 
-export PATH=~/bin:~/Tools:/usr/local/bin:$PATH
+export PATH=~/go/bin:~/go-workspace/bin:~/bin:~/Tools:/usr/local/bin:$PATH
+export GOPATH=~/go-workspace
 
 # Terminal color
 export CLICOLOR=1

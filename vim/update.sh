@@ -18,6 +18,8 @@ PLUGINS=("vim-scripts/bufexplorer.zip"
          "Lokaltog/vim-easymotion"
          "sukima/xmledit"
          "tpope/vim-fugitive"
+         "dgryski/vim-godef"
+         "Blackrush/vim-gocode"
          "mattn/zencoding-vim")
 SUFFIX=".git"
 
