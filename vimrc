@@ -116,6 +116,11 @@ catch
 endtry
 
 
+"""""""""""""""""""""""""""""""""""""""""
+" Work with tmux
+"""""""""""""""""""""""""""""""""""""""""
+au BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window " . expand("%:t"))
+
 
 """""""""""""""""""""""""""""""""""""""""
 " Files, backups and undo
