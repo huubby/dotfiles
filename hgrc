@@ -1,0 +1,9 @@
+[extensions]
+hgext.extdiff=
+[extdiff]
+cmd.vimdiff= vim
+opts.vimdiff= -d $parent $child
+
+[ui]
+username=huubby <huubby1@gmail.com>
+editor=vim
