@@ -119,7 +119,7 @@ endtry
 """""""""""""""""""""""""""""""""""""""""
 " Work with tmux
 """""""""""""""""""""""""""""""""""""""""
-au BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window " . expand("%:t"))
+"au BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window " . expand("%:t"))
 
 
 """""""""""""""""""""""""""""""""""""""""
