@@ -4,8 +4,8 @@
 set tags+=tags
 
 function! RefreshTags()
+    cs kill 0
     if has('Win32')
-        cs kill 0
         let cmd = "updatetags.bat"
     else
         let cmd = "./updatetags.sh " . getcwd()
