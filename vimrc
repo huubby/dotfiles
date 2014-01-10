@@ -473,7 +473,7 @@ map <silent> <F9> :TagbarToggle<cr>
 " Ctrl-P settings
 """"""""""""""""""""""""""""""""""""""
 let g:ctrlp_map='<c-p>'
-"let g:ctrlp_working_path_mode=0 " don't change the working directory
+let g:ctrlp_working_path_mode=0 " don't change the working directory
 let g:ctrlp_regexp = 1          " Use regexp search
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -585,4 +585,4 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-let g:godef_split=0
+let g:godef_split = 0
