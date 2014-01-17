@@ -473,7 +473,6 @@ map <silent> <F9> :TagbarToggle<cr>
 " Ctrl-P settings
 """"""""""""""""""""""""""""""""""""""
 let g:ctrlp_map='<c-p>'
-let g:ctrlp_working_path_mode=0 " don't change the working directory
 let g:ctrlp_regexp = 1          " Use regexp search
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
