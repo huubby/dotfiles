@@ -21,7 +21,7 @@ PLUGINS=("vim-scripts/bufexplorer.zip"
          "tpope/vim-fugitive"
          "dgryski/vim-godef"
          "Blackrush/vim-gocode"
-         "mattn/zencoding-vim")
+         "mattn/emmet-vim")
 SUFFIX=".git"
 
 echo "Start to install plugins..."
