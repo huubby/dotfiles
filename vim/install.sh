@@ -21,6 +21,8 @@ PLUGINS=("vim-scripts/bufexplorer.zip"
          "tpope/vim-fugitive"
          "dgryski/vim-godef"
          "Blackrush/vim-gocode"
+         "tpope/vim-surround"
+         "tpope/vim-repeat"
          "mattn/emmet-vim")
 SUFFIX=".git"
 
