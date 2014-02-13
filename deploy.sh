@@ -14,7 +14,7 @@ fi
 
 
 OLDDIR=~/dotfiles_old
-DOTFILES="bashrc vimrc vim svn.bashrc gitconfig tmux.conf hgrc"
+DOTFILES="bashrc vimrc vim svn.bashrc gitconfig tmux.conf hgrc gitignore_global"
 
 echo "Creating $OLDDIR for backup of any existing dotfiles in ~"
 mkdir -p $OLDDIR
@@ -29,3 +29,7 @@ for file in ${DOTFILES[@]}; do
     echo "Creating symlink to $file in home directory."
     ln -s $DOTFILES_DIR/$file ~/.$file
 done
+
+if [ -f /usr/bin/git ]; then
+    git config --global core.excludesfile ~/.gitignore_global
+fi
