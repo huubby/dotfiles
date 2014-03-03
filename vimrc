@@ -373,7 +373,7 @@ autocmd BufWrite *.hpp :call DeleteTrailingWS()
 """""""""""""""""""""""""""""""""""""""""
 " Quickfix
 """""""""""""""""""""""""""""""""""""""""
-"autocmd FileType c,cpp map<buffer> <leader><space> :w<cr>:make<cr>
+map <leader><space> :w<cr>:make<cr>
 nmap <leader>cc :botright cope<cr>
 nmap <leader>cn :cn<cr>
 nmap <leader>cp :cp<cr>
@@ -585,3 +585,4 @@ let g:tagbar_type_go = {
 \ }
 
 let g:godef_split = 0
+let g:go_fmt_autofmt = 0
