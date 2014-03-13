@@ -14,7 +14,7 @@ fi
 
 
 OLDDIR=~/dotfiles_old
-DOTFILES="bashrc vimrc vim svn.bashrc gitconfig tmux.conf hgrc gitignore_global"
+DOTFILES="bashrc gvimrc vimrc vim svn.bashrc gitconfig tmux.conf hgrc gitignore_global"
 
 echo "Creating $OLDDIR for backup of any existing dotfiles in ~"
 mkdir -p $OLDDIR
